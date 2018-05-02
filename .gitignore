@@ -1,0 +1,4 @@
+*.retry
+vagrant/.vagrant/
+vagrant/galaxy_roles/
+tests/roles/

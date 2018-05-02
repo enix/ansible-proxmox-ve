@@ -1,0 +1,10 @@
+---
+# handlers file for proxmox-ve
+
+# - name: restart $service
+#   sudo: yes
+#   service: name=$service state=restarted
+
+# - name: reload $service
+#   sudo: yes
+#   service: name=$service state=reloaded

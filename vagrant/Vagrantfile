@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "debian/stretch64"
+  config.vm.define "debianstretch64" do |debianstretch64| end
+
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 512
+      v.cpus = 1
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "../tests/test.yml"
+    ansible.verbose = "vvv"
+    ansible.sudo = true
+#    ansible.galaxy_role_file = "../requirements.yml"
+    ansible.groups = {
+      "test" => ["debianstretch64"],
+      }
+  end
+
+  if Vagrant.has_plugin?("vagrant-cachier")
+    # Configure cached packages to be shared between instances of the same base box.
+    # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
+    config.cache.scope = :box
+  end
+end
