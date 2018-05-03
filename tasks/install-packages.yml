@@ -29,4 +29,5 @@
   apt:
     package: proxmox-ve
     state: present
+    update_cache: yes
   notify: Reboot Host
