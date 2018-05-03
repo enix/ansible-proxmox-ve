@@ -19,9 +19,9 @@ variables:
       || (echo 'Idempotence test: fail' && exit 1)
 # This part is used to check role run.
 # Add your own tests depending on your $ROLE
-    - echo "=======> Starting output tests"
+#    - echo "=======> Starting output tests"
     # check that our dummy file exists. TOBEREMOVED
-    - cat /tmp/.dummy-ansible-task
+#    - cat /tmp/.dummy-ansible-task
 
 # We build using (ansiblecheck)[https://hub.docker.com/r/ansiblecheck/ansiblecheck/]
 # images It provide a wide variety of OS container images to test with.

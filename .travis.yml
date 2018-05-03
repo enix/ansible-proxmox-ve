@@ -53,9 +53,9 @@ script:
 
   # Run role test suite
 # Add your own tests depending on your $ROLE
-  - echo "=======> Starting output tests"
+#  - echo "=======> Starting output tests"
   # check that our dummy file exists. TOBEREMOVED
-  - 'docker exec "$(cat ${container_id})" cat /tmp/.dummy-ansible-task'
+#  - 'docker exec "$(cat ${container_id})" cat /tmp/.dummy-ansible-task'
 
 
 notifications:
