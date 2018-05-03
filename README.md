@@ -19,7 +19,10 @@ Role Variables
 
 This roles comes preloaded with almost every available default. You can override each one in your hosts/group vars, in your inventory, or in your play. See the annotated defaults in `defaults/main.yml` for help in configuration. All provided variables start with `proxmox_ve__`.
 
-- `proxmox_ve__enterprise` - enable or not the enterprise subscription for Proxmox VE. default: false
+- `proxmox_ve__enterprise` - enable or not the enterprise subscription for Proxmox VE. default: false.
+- `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
+- `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
+
 
 Dependencies
 ------------
@@ -44,7 +47,7 @@ And add it to your play's roles:
     - hosts: all
       roles:
         - role proxmox-ve:
-            proxmox_ve__var: true
+          proxmox_ve__$var: true
 
 You can also use the role as a playbook. You will be asked which hosts to provision, and you can further configure the play by using `--extra-vars`.
 
@@ -53,11 +56,7 @@ You can also use the role as a playbook. You will be asked which hosts to provis
 Still to do
 -----------
 
-- Add proxmox-ve debian repository
-- Install proxmox-ve software suite
 - auto add hosts to clusters
-- Install and configure OpenVswitch
-- Configure network using playbook template
 - Create and configure local LVM vg (using raid10)
 - Install and configure ISCSI target volume + LVM vg
 

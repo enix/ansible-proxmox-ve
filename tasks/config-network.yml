@@ -1,0 +1,18 @@
+---
+
+- name: Install OpenVSwitch
+  apt:
+    name: openvswitch-switch
+    state: present
+  when: proxmox_ve__net_ovs
+
+- name: Configure interfaces
+  template:
+    src: "{{ proxmox_ve__net_template }}"
+    dest: "/etc/network/interfaces"
+    backup: true
+    owner: root
+    group: root
+    mode: 0644
+  notify: Reboot Host
+# check network configuration template
