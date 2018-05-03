@@ -1,14 +1,8 @@
 ---
 
-# dummy task for tests
-- name: "Dummy task"
-  copy:
-    dest: /tmp/.dummy-ansible-task
-    content: |
-      {{ ansible_host }}
-      ------------------
-      {% if ansible_lsb is defined %}
-      {{ ansible_lsb | to_nice_json }}
-      {% else %}
-      {{ ansible_distribution }}
-      {% endif %}
+- name: "Checking system OS"
+  fail:
+    msg: "This is not a Debian based distribution. Proxmox VE is not compatible"
+  when: ansible_distribution != "Debian"
+
+- include: install-packages.yml

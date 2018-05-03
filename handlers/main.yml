@@ -1,9 +1,8 @@
 ---
 # handlers file for proxmox-ve
 
-# - name: restart $service
-#   sudo: yes
-#   service: name=$service state=restarted
+- name: Reboot Host
+  command: echo "Host configuration might have big changes. Highly recommended to reboot the host."
 
 # - name: reload $service
 #   sudo: yes

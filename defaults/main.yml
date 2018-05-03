@@ -1,2 +1,4 @@
 ---
 # defaults file for proxmox-ve
+
+proxmox_ve__enterprise: false

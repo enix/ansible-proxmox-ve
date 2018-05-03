@@ -1,0 +1,32 @@
+---
+
+- name: Register repository signing key
+  apt_key:
+    url: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release] }}"
+
+- name: Removing well known repo files
+  file:
+    path: /etc/apt/sources.list.d/{{ item }}
+    state: absent
+  with_items:
+    - "{{ proxmox_ve__apt_repo_todel }}"
+
+- name: Add no-subscription repository
+  apt_repository:
+    repo: "{{ proxmox_ve__apt_repo_pve_no_subscription }}"
+    state: present
+    update_cache: yes
+
+- name: Add enterprise repository
+  apt_repository:
+    repo: "{{ proxmox_ve__apt_repo_pve_enterprise }}"
+    state: present
+    update_cache: yes
+  when:
+    - proxmox_ve__enterprise
+
+- name: Install Proxmox VE software
+  apt:
+    package: proxmox-ve
+    state: present
+  notify: Reboot Host

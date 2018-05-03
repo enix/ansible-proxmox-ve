@@ -1,7 +1,7 @@
 eNiXHosting.proxmox-ve
 =================
 
-A role for deploying and configuring [proxmox VE](https://www.proxmox.com/en/proxmox-ve) on unix hosts using [Ansible](http://www.ansible.com/).
+A role for deploying and configuring [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) on unix hosts using [Ansible](http://www.ansible.com/).
 This role is really tied to eNiXHosting usage by configuring local LVM volumes, ISCSI multi-path, etc... So it is maybe not relevant to everyone, however every step is configurable so can be used independently
 
 
@@ -17,9 +17,9 @@ Supported targets:
 Role Variables
 --------------
 
-This roles comes preloaded with almost every available default. You can override each one in your hosts/group vars, in your inventory, or in your play. See the annotated defaults in `defaults/main.yml` for help in configuration. All provided variables start with `proxmox-ve__`.
+This roles comes preloaded with almost every available default. You can override each one in your hosts/group vars, in your inventory, or in your play. See the annotated defaults in `defaults/main.yml` for help in configuration. All provided variables start with `proxmox_ve__`.
 
-- `proxmox-ve__` - desc
+- `proxmox_ve__enterprise` - enable or not the enterprise subscription for Proxmox VE. default: false
 
 Dependencies
 ------------
@@ -44,7 +44,7 @@ And add it to your play's roles:
     - hosts: all
       roles:
         - role proxmox-ve:
-            proxmox-ve__var: true
+            proxmox_ve__var: true
 
 You can also use the role as a playbook. You will be asked which hosts to provision, and you can further configure the play by using `--extra-vars`.
 
