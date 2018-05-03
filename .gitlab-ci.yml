@@ -27,13 +27,15 @@ variables:
 # images It provide a wide variety of OS container images to test with.
 # most frequent ones included here
 
-debian-jessie:
-  image: ansiblecheck/ansiblecheck:debian-jessie
-  <<: *ansible_test
+# debian-jessie:
+#   image: ansiblecheck/ansiblecheck:debian-jessie
+#   <<: *ansible_test
 
 debian-stretch:
   image: ansiblecheck/ansiblecheck:debian-stretch
   <<: *ansible_test
+  tags:
+    - virtualbox
 
 # ubuntu-trusty:
 #   image: ansiblecheck/ansiblecheck:ubuntu-trusty
