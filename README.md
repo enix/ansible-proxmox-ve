@@ -62,7 +62,6 @@ Still to do
 -----------
 
 - auto add hosts to clusters
-- Create and configure local LVM vg (using raid10)
 - Install and configure ISCSI target volume + LVM vg
 
 
