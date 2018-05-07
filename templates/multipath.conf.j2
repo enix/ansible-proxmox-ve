@@ -14,16 +14,20 @@ blacklist {
 }
 
 blacklist_exceptions {
-{% for item in proxmox_ve__storage_iscsi %}
+{% for stor in proxmox_ve__storage_iscsi %}
+{% for item in stor.volumes %}
   wwid "{{ item.wwid }}"
+{% endfor %}
 {% endfor %}
 }
 
 multipaths {
-{% for item in proxmox_ve__storage_iscsi %}
+{% for stor in proxmox_ve__storage_iscsi %}
+{% for item in stor.volumes %}
   multipath {
     wwid "{{ item.wwid }}"
     alias {{ item.name }}
   }
+{% endfor %}
 {% endfor %}
 }

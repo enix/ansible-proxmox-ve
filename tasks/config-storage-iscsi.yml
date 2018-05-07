@@ -51,6 +51,7 @@
   service: name=multipath-tools state=restarted
   when: multipath_restart|changed
 
+# FIXME add check if exist before
 - name: "Update proxmox storage configuration"
   blockinfile:
     path: /etc/pve/storage.cfg
@@ -72,9 +73,10 @@
 
 - name: "Wait for ISCSI device to come UP, It's time to map volume to LUN in your ISCSI storage system"
   wait_for:
-    path: "/dev/mapper/{{ item.name }}"
+    path: "/dev/mapper/{{ item.1.name }}"
     state: present
     delay: 30
-    timeout: 60
-  with_items:
+    timeout: 3600
+  with_subelements:
     - "{{ proxmox_ve__storage_iscsi }}"
+    - volumes
