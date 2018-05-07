@@ -1,0 +1,80 @@
+---
+
+- name: "Install ISCSI tools"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - open-iscsi
+    - multipath-tools
+
+- name: "Change default initiator name"
+  lineinfile:
+    path: /etc/iscsi/initiatorname.iscsi
+    regexp: '^(InitiatorName=iqn.1993-08\.)org\.debian(.*)$'
+    line: '\1io.enix.{{ ansible_hostname }}\2'
+    backrefs: yes
+    state: present
+    backup: yes
+
+- name: "Configure ISCSI daemon"
+  lineinfile:
+    path: /etc/iscsi/iscsid.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    backup: yes
+  with_items:
+    - regexp: '.*node.startup.*$'
+      line: "node.startup = automatic"
+    - regexp: '.*node.session.timeo.replacement_timeout.*'
+      line: "node.session.timeo.replacement_timeout = 10"
+  # notify: restart iscsid
+  register: iscsid_restart
+
+- name: "Configure mutlipath daemon"
+  template:
+    src: "{{ proxmox_ve__storage_iscsi_multipath_template }}"
+    dest: /etc/multipath.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  # notify: restart multipath
+  register: multipath_restart
+
+- name: restart iscsid
+  service: name=iscsid state=restarted
+  when: iscsid_restart|changed
+
+- name: restart multipath
+  service: name=multipath-tools state=restarted
+  when: multipath_restart|changed
+
+- name: "Update proxmox storage configuration"
+  blockinfile:
+    path: /etc/pve/storage.cfg
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK iscsi:{{ item.name }}"
+    state: present
+    block : |
+      iscsi: {{ item.name }}
+        portal {{ item.portal }}
+        content none
+        target {{ item.target }}
+
+  with_items:
+    - "{{ proxmox_ve__storage_iscsi }}"
+
+- name: "Start proxmox storage daemon"
+  command: pvesm status
+
+
+- name: "Wait for ISCSI device to come UP, It's time to map volume to LUN in your ISCSI storage system"
+  wait_for:
+    path: "/dev/mapper/{{ item.name }}"
+    state: present
+    delay: 30
+    timeout: 60
+  with_items:
+    - "{{ proxmox_ve__storage_iscsi }}"

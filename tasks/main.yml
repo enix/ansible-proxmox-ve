@@ -9,5 +9,8 @@
 
 - include: config-network.yml
 
+- include: config-storage-iscsi.yml
+  when: "{{ proxmox_ve__storage_iscsi | length }} > 0"
+
 - include: config-storage-lvm.yml
   when: "{{ proxmox_ve__storage_lvm | length }} > 0"

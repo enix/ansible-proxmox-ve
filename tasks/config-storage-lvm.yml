@@ -24,5 +24,6 @@
         vgname {{ item.name }}
         content images
         shared {{ item.shared }}
+        
   with_items:
     - "{{ proxmox_ve__storage_lvm }}"

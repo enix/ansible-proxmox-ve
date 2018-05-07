@@ -1,0 +1,29 @@
+defaults {
+  polling_interval        2
+  path_selector           "round-robin 0"
+  path_grouping_policy    "group_by_prio"
+  uid_attribute           ID_SERIAL
+  rr_min_io               100
+  failback                immediate
+  no_path_retry           queue
+  user_friendly_names     yes
+}
+
+blacklist {
+  wwid .*
+}
+
+blacklist_exceptions {
+{% for item in proxmox_ve__storage_iscsi %}
+  wwid "{{ item.wwid }}"
+{% endfor %}
+}
+
+multipaths {
+{% for item in proxmox_ve__storage_iscsi %}
+  multipath {
+    wwid "{{ item.wwid }}"
+    alias {{ item.name }}
+  }
+{% endfor %}
+}

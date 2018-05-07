@@ -4,6 +4,8 @@
 - name: Reboot Host
   command: echo "Host configuration might have big changes. Highly recommended to reboot the host."
 
-# - name: reload $service
-#   sudo: yes
-#   service: name=$service state=reloaded
+- name: restart iscsid
+  service: name=iscsid state=restarted
+
+- name: restart multipath
+  service: name=multipath-tools state=restarted
