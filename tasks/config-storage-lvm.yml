@@ -12,11 +12,12 @@
     - "{{ proxmox_ve__storage_lvm }}"
 
 # Add to proxmox configuration
+# FIXME switch to regexp match
 - name: "Update proxmox configuration"
   blockinfile:
     path: /etc/pve/storage.cfg
     backup: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK lvm:{{ item.name }}"
     state: present
     block : |
       lvm: {{ item.name }}
