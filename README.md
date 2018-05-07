@@ -22,7 +22,7 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__enterprise` - enable or not the enterprise subscription for Proxmox VE. default: false.
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
-
+- `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
 
 Dependencies
 ------------
@@ -47,7 +47,12 @@ And add it to your play's roles:
     - hosts: all
       roles:
         - role proxmox-ve:
-          proxmox_ve__$var: true
+          proxmox_ve__storage_lvm:
+            - name: "vgpve"
+              devices:
+                - /dev/md12
+              pesize: "128"
+              shared: 0
 
 You can also use the role as a playbook. You will be asked which hosts to provision, and you can further configure the play by using `--extra-vars`.
 
