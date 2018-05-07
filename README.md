@@ -46,7 +46,7 @@ And add it to your play's roles:
 
     - hosts: all
       roles:
-        - role proxmox-ve:
+        - role: eNiXHosting.proxmox-ve
           proxmox_ve__storage_lvm:
             - name: "vgpve"
               devices:
