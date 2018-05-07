@@ -80,4 +80,4 @@ GPLv2
 Author Information
 ------------------
 
-$your $name <$your.$name@enix.fr> - http://www.enix.fr
+LAurent CORBES <laurent.corbes@enix.fr> - http://www.enix.fr
