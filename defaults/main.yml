@@ -4,3 +4,4 @@
 proxmox_ve__enterprise: false
 proxmox_ve__net_ovs: false
 proxmox_ve__net_template: "interfaces.j2"
+proxmox_ve__storage_lvm: []

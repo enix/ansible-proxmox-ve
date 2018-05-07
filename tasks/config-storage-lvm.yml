@@ -1,0 +1,27 @@
+---
+
+
+# Create device vg
+- name: "Create LVM vg"
+  lvg:
+    vg: "{{ item.name }}"
+    pvs: "{{ item.devices | join (',') }}"
+    pesize: "{{ item.pesize }}"
+    state: present
+  with_items:
+    - "{{ proxmox_ve__storage_lvm }}"
+
+# Add to proxmox configuration
+- name: "Update proxmox configuration"
+  blockinfile:
+    path: /etc/pve/storage.cfg
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+    state: present
+    block : |
+      lvm: {{ item.name }}
+        vgname {{ item.name }}
+        content images
+        shared {{ item.shared }}
+  with_items:
+    - "{{ proxmox_ve__storage_lvm }}"

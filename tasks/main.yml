@@ -8,3 +8,6 @@
 - include: install-packages.yml
 
 - include: config-network.yml
+
+- include: config-storage-lvm.yml
+  when: "{{ proxmox_ve__storage_lvm | length }} > 0"
