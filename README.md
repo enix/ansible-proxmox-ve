@@ -23,6 +23,9 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
+- `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
+- `proxmox_ve__storage_iscsi_multipath_template` - template file to use for multipath configuration.
+
 
 Dependencies
 ------------
@@ -47,12 +50,24 @@ And add it to your play's roles:
     - hosts: all
       roles:
         - role: eNiXHosting.proxmox-ve
+          proxmox_ve__storage_iscsi:
+            - name: iscsi-storage
+              portal: 192.168.0.1
+              target: iqn.2015-11.com.storage:iscsi.12315132
+              volumes:
+                - name: bigvolume
+                  wwid: 3600c0ff0003bb7fcb730e75a01000000
           proxmox_ve__storage_lvm:
-            - name: "vgpve"
+            - name: "localvm"
               devices:
                 - /dev/md12
               pesize: "128"
               shared: 0
+            - name: "iscsilvm"
+              devices:
+                - /dev/mapper/bigvolume
+              pesize: "256"
+              shared: 1
 
 You can also use the role as a playbook. You will be asked which hosts to provision, and you can further configure the play by using `--extra-vars`.
 
@@ -62,15 +77,16 @@ Still to do
 -----------
 
 - auto add hosts to clusters
-- Install and configure ISCSI target volume + LVM vg
+- manage users and credentials
+- change storage configuration to usage of pvesm commands
 
 
 Changelog
 ---------
 
-### 0.1
+### 1.0
 
-Initial version.
+First version that include basic storage configuration.
 
 License
 -------
@@ -80,4 +96,4 @@ GPLv2
 Author Information
 ------------------
 
-LAurent CORBES <laurent.corbes@enix.fr> - http://www.enix.fr
+Laurent CORBES <laurent.corbes@enix.fr> - http://www.enix.fr
