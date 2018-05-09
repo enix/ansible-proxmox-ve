@@ -1,4 +1,5 @@
 *.retry
+*.swp
 vagrant/.vagrant/
 vagrant/galaxy_roles/
 tests/roles/
