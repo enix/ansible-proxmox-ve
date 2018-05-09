@@ -63,7 +63,7 @@
         portal {{ item.portal }}
         content none
         target {{ item.target }}
-
+        
   with_items:
     - "{{ proxmox_ve__storage_iscsi }}"
 
