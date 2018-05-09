@@ -75,7 +75,7 @@
   wait_for:
     path: "/dev/mapper/{{ item.1.name }}"
     state: present
-    delay: 30
+    delay: 10
     timeout: 3600
   with_subelements:
     - "{{ proxmox_ve__storage_iscsi }}"
