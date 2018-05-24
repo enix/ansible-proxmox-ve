@@ -33,6 +33,7 @@
   register: iscsid_restart
 
 - name: "Configure mutlipath daemon"
+- name: "Configure multipath daemon"
   template:
     src: "{{ proxmox_ve__storage_iscsi_multipath_template }}"
     dest: /etc/multipath.conf
