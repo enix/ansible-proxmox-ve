@@ -11,6 +11,17 @@
   with_items:
     - "{{ proxmox_ve__storage_lvm }}"
 
+# Disable autoactivation of volumes
+- name: "Disable LVM auto volume activation"
+  lineinfile:
+    path: /etc/lvm/lvm.conf
+    regexp: "^auto_activation_volume_list ="
+    line: "auto_activation_volume_list = []"
+    insertafter: "^\t# auto_activation_volume_list = "
+    state: present
+    backup: yes
+
+
 # Add to proxmox configuration
 # FIXME switch to regexp match
 - name: "Update proxmox configuration"
