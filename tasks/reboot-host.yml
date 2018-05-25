@@ -1,0 +1,14 @@
+---
+# Automatic host reboot
+
+- name: Force handlers to run now
+  meta: flush_handlers
+
+- name: "Wait host"
+  wait_for_connection:
+    delay: 10
+    sleep: 5
+    timeout: 900
+
+- name: "Regather facts"
+  setup:

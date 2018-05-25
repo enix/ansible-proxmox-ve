@@ -9,6 +9,9 @@
 
 - include: config-network.yml
 
+- include: reboot-host.yml
+  when: proxmox_ve__force_reboot
+
 - include: config-storage-iscsi.yml
   when: "{{ proxmox_ve__storage_iscsi | length }} > 0"
 

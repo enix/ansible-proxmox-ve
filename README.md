@@ -19,6 +19,7 @@ Role Variables
 
 This roles comes preloaded with almost every available default. You can override each one in your hosts/group vars, in your inventory, or in your play. See the annotated defaults in `defaults/main.yml` for help in configuration. All provided variables start with `proxmox_ve__`.
 
+- `proxmox_ve__force_reboot` - :warning: **Caution** :warning:. In case of important configuration changes this will automatically reboot the host. default: false.
 - `proxmox_ve__enterprise` - enable or not the enterprise subscription for Proxmox VE. default: false.
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
@@ -78,7 +79,6 @@ Still to do
 
 - auto add hosts to clusters
 - manage users and credentials
-- change storage configuration to usage of pvesm commands
 
 
 Changelog

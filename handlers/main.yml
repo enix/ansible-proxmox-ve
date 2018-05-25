@@ -2,7 +2,11 @@
 # handlers file for proxmox-ve
 
 - name: Reboot Host
-  command: echo "Host configuration might have big changes. Highly recommended to reboot the host."
+  shell: sleep 2 && shutdown -r now "Ansible reboot"
+  async: 1
+  poll: 0
+  ignore_errors: true
+  when: proxmox_ve__force_reboot
 
 - name: restart iscsid
   service: name=iscsid state=restarted

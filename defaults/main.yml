@@ -1,6 +1,7 @@
 ---
 # defaults file for proxmox-ve
 
+proxmox_ve__force_reboot: false
 proxmox_ve__enterprise: false
 proxmox_ve__net_ovs: false
 proxmox_ve__net_template: "interfaces.j2"
