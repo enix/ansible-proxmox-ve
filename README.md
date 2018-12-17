@@ -24,6 +24,7 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
+- `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" ]`. If using LVM inside VMs this can lead to issues. So it must be set to `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/[^/]+/vm-[0-9]+-disk-.*|" ]`.
 - `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
 - `proxmox_ve__storage_iscsi_multipath_template` - template file to use for multipath configuration.
 
@@ -77,6 +78,7 @@ You can also use the role as a playbook. You will be asked which hosts to provis
 Still to do
 -----------
 
+- global filter override
 - auto add hosts to clusters
 - manage users and credentials
 
@@ -84,7 +86,12 @@ Still to do
 Changelog
 ---------
 
-### 1.0
+### 2.0.0
+
+Now include automatic host reboot feature, proper storage manangement
+
+
+### 1.0.0
 
 First version that include basic storage configuration.
 

@@ -21,6 +21,16 @@
     state: present
     backup: yes
 
+# Check global_filter configuration
+- name: "Set LVM global_filter configuration"
+  lineinfile:
+    path: /etc/lvm/lvm.conf
+    regexp: "^([ \t]*global_filter =).*"
+    line: '\1 {{ proxmox_ve__lvm_global_filter }}'
+    state: present
+    backrefs: yes
+    backup: yes
+
 - name: "Check LVM storage existence"
   command: pvesm list {{ item.name }}
   ignore_errors: yes
