@@ -1,0 +1,10 @@
+---
+
+- name: Setup /etc/hosts with node ip
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^[0-9\.]+[ \t]+(.*{{ ansible_hostname }}.*)'
+    line: '{{ ansible_default_ipv4.address }} \1'
+    backrefs: yes
+    state: present
+    backup: true

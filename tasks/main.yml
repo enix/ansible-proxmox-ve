@@ -5,6 +5,8 @@
     msg: "This is not a Debian based distribution. Proxmox VE is not compatible"
   when: ansible_distribution != "Debian"
 
+- include: preconfig.yml
+
 - include: install-packages.yml
 
 - include: config-network.yml
