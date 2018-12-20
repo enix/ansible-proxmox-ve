@@ -10,13 +10,13 @@ variables:
 #    - ansible-galaxy install -v -r requirements.yml
     - ansible-playbook tests/test.yml --syntax-check
     - ansible-playbook -vvv --connection=local tests/test.yml
-    - idempotence=$(mktemp)
-    - ansible-playbook -vvv --connection=local tests/test.yml | tee ${idempotence}
-    - >
-      tail ${idempotence}
-      | grep -q 'changed=0.*failed=0'
-      && (echo 'Idempotence test: pass' && exit 0)
-      || (echo 'Idempotence test: fail' && exit 1)
+    # - idempotence=$(mktemp)
+    # - ansible-playbook -vvv --connection=local tests/test.yml | tee ${idempotence}
+    # - >
+    #   tail ${idempotence}
+    #   | grep -q 'changed=0.*failed=0'
+    #   && (echo 'Idempotence test: pass' && exit 0)
+    #   || (echo 'Idempotence test: fail' && exit 1)
 # This part is used to check role run.
 # Add your own tests depending on your $ROLE
 #    - echo "=======> Starting output tests"

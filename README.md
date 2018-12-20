@@ -78,13 +78,17 @@ You can also use the role as a playbook. You will be asked which hosts to provis
 Still to do
 -----------
 
-- global filter override
 - auto add hosts to clusters
 - manage users and credentials
 
 
 Changelog
 ---------
+
+### 2.1.0
+
+Allow override of lvm global_filter
+Add configuration of /etc/hosts
 
 ### 2.0.0
 
