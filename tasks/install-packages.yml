@@ -1,5 +1,10 @@
 ---
 
+- name: Install APT https transport
+  apt:
+    package: apt-transport-https
+    state: present
+
 - name: Register repository signing key
   apt_key:
     url: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release] }}"
