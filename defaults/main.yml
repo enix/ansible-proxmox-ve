@@ -1,5 +1,5 @@
 ---
-# defaults file for proxmox-ve
+# defaults file for proxmox_ve
 
 proxmox_ve__force_reboot: false
 proxmox_ve__enterprise: false

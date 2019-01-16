@@ -1,5 +1,5 @@
 ---
-# handlers file for proxmox-ve
+# handlers file for proxmox_ve
 
 - name: Reboot Host
   shell: sleep 2 && shutdown -r now "Ansible reboot"

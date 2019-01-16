@@ -1,7 +1,7 @@
-enix.proxmox-ve
+enix.proxmox_ve
 =================
 
-A role for deploying and configuring [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) on unix hosts using [Ansible](http://www.ansible.com/).
+A role for deploying and configuring [Proxmox VE](https://www.proxmox.com/en/proxmox_ve) on unix hosts using [Ansible](http://www.ansible.com/).
 This role is really tied to enix usage by configuring local LVM volumes, ISCSI multi-path, etc... So it is maybe not relevant to everyone, however every step is configurable so can be used independently
 
 
@@ -39,19 +39,19 @@ Usage
 
 Clone this repo into your roles directory:
 
-    $ git clone https://gitlab.enix.org/ansible/ansible-proxmox-ve.git roles/proxmox-ve
+    $ git clone https://gitlab.enix.org/ansible/ansible-proxmox_ve.git roles/proxmox_ve
 
 Or use Ansible galaxy requirements.yml
 
     # public role
-    - src: enix.proxmox-ve
-      name: proxmox-ve
+    - src: enix.proxmox_ve
+      name: proxmox_ve
 
 And add it to your play's roles:
 
     - hosts: all
       roles:
-        - role: enix.proxmox-ve
+        - role: enix.proxmox_ve
           proxmox_ve__storage_iscsi:
             - name: iscsi-storage
               portal: 192.168.0.1
