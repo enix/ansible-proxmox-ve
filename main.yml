@@ -7,7 +7,7 @@
 # You will be asked which hosts to provision before-hand.
 
 
-- name: eNiXHosting.proxmox-ve
+- name: enix.proxmox-ve
 
   vars_prompt:
     selected_hosts: Specify the hosts to provision
