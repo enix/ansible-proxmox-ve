@@ -12,9 +12,26 @@ env:
 
 before_install:
   # Pull container from Docker Hub.
+  - 'docker pull ansiblecheck/ansiblecheck:${distribution,,}-${distribution_version}'
 
 script:
-  # Run role test suite
+  - container_id=$(mktemp)
+  # Start The Built Container In The Background
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ansiblecheck/ansiblecheck:"${distribution,,}"-"${distribution_version}" "${init}" > "${container_id}"'
+
+  # Ansible version check.
+  - 'docker exec --tty "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=true ansible --version'
+
+  # Run linters, does not fail the job in case of errors
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-lint -c /etc/ansible/roles/role_under_test/.ansible-lint /etc/ansible/roles/role_under_test/ || true'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm yamllint -c /etc/ansible/roles/role_under_test/.yamllint /etc/ansible/roles/role_under_test/ || true'
+
+  # Install requirements, Uncomment if needed
+  #- 'docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=true ansible-galaxy install -v -r /etc/ansible/roles/role_under_test/requirements.yml'
+
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=true ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+
 # Add your own tests depending on your $ROLE
   - echo "=======> Proxmox does not install on Travis-CI"
 

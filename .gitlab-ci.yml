@@ -6,6 +6,9 @@ variables:
 .ansible_test_template: &ansible_test
   script:
     - ansible --version
+# Run linters. Does not fail if no errors reported
+    - ansible-lint --force-color . || true
+    - yamllint -f colored . || true
 # Uncomment if your role have depends
 #    - ansible-galaxy install -v -r requirements.yml
     - ansible-playbook tests/test.yml --syntax-check
