@@ -1,6 +1,10 @@
 ---
 # handlers file for proxmox_ve
 
+
+- name: update-grub
+  command: update-grub
+
 - name: Reboot Host
   shell: sleep 2 && shutdown -r now "Ansible reboot"
   async: 1

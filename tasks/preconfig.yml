@@ -18,9 +18,6 @@
     state: present
     backup: true
   when: proxmox_ve__disable_smt
-  notify: Reboot Host
-  register: dissmt
-
-- name: Update grub.cfg
-  command: update-grub
-  when: dissmt.changed
+  notify:
+    - update-grub
+    - Reboot Host
