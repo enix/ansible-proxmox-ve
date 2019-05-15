@@ -8,3 +8,14 @@
     backrefs: yes
     state: present
     backup: true
+
+- name: Disable SMT
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^(GRUB_CMDLINE_LINUX=(?!.*nosmt)\"[^\"]*)(\".*)'
+    line: '\1 nosmt\2'
+    backrefs: true
+    state: present
+    backup: true
+  when: proxmox_ve__disable_smt
+  notify: Reboot Host

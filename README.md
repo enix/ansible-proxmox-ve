@@ -21,6 +21,7 @@ This roles comes preloaded with almost every available default. You can override
 
 - `proxmox_ve__force_reboot` - :warning: **Caution** :warning:. In case of important configuration changes this will automatically reboot the host. default: false.
 - `proxmox_ve__enterprise` - enable or not the enterprise subscription for Proxmox VE. default: false.
+- `proxmox_ve__disable_smt` - disable SMT (Hyperthreading) as a boot kernel option. See [https://www.kernel.org/doc/html/latest/admin-guide/hw-vuln/l1tf.html#smt-control] for details about associated flaws. default: false.
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
