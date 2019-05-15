@@ -86,6 +86,10 @@ Still to do
 Changelog
 ---------
 
+### 2.2.0
+
+Add proxmox_ve__disable_smt option
+
 ### 2.1.1
 
 Switch to enix.deb role_name
