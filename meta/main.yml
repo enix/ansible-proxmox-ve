@@ -15,7 +15,7 @@ galaxy_info:
 
   galaxy_tags:
     - proxmox
-    - proxmox-ve
+    - proxmox_ve
     - pve
     - hv
     - kvm
