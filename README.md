@@ -27,6 +27,13 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
 - `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" ]`. If using LVM inside VMs this can lead to issues. So it must be set to `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/[^/]+/vm-[0-9]+-disk-.*|" ]`.
 - `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
+- `proxmox_ve__storage_iscsi_options` - options to change in iscsid.conf. default:
+```
+proxmox_ve__storage_iscsi_options:
+  - option: node.session.timeo.replacement_timeout
+    value: 10
+    state: present
+```
 - `proxmox_ve__storage_iscsi_multipath_template` - template file to use for multipath configuration.
 
 

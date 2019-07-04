@@ -17,7 +17,7 @@
     state: present
     backup: yes
 
-- name: "Configure ISCSI daemon"
+- name: "Configure ISCSI daemon startup"
   lineinfile:
     path: /etc/iscsi/iscsid.conf
     regexp: "{{ item.regexp }}"
@@ -27,9 +27,17 @@
   with_items:
     - regexp: '.*node.startup.*$'
       line: "node.startup = automatic"
-    - regexp: '.*node.session.timeo.replacement_timeout.*'
-      line: "node.session.timeo.replacement_timeout = 10"
-  # notify: restart iscsid
+  register: iscsid_restart
+
+- name: "Configure ISCSI daemon options"
+  lineinfile:
+    path: /etc/iscsi/iscsid.conf
+    backrefs: yes
+    regexp: "^#?{{ item.option }}.+$"
+    line: "{{ item.option }} = {{ item.value }}"
+    state: "{{ item.state | default('present') }}"
+    backup: yes
+  with_items: "{{ proxmox_ve__storage_iscsi_options }}"
   register: iscsid_restart
 
 - name: "Configure multipath daemon"
