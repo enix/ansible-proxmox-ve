@@ -8,7 +8,7 @@ proxmox_ve__net_template: "interfaces.j2"
 proxmox_ve__storage_lvm: []
 proxmox_ve__storage_iscsi: []
 proxmox_ve__storage_iscsi_multipath_template: "multipath.conf.j2"
-proxmox_ve__lvm_global_filter: '[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" ], "r|/dev/[^/]+/vm-[0-9]+-disk-.*|" ]'
+proxmox_ve__lvm_global_filter: '[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/[^/]+/vm-[0-9]+-disk-.*|" ]'
 proxmox_ve__disable_smt: false
 proxmox_ve__storage_iscsi_options:
   - option: node.session.timeo.replacement_timeout
