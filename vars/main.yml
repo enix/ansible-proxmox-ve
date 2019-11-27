@@ -4,6 +4,7 @@
 proxmox_ve__apt_repo_pve_no_subscription: "deb http://download.proxmox.com/debian {{ ansible_distribution_release }} pve-no-subscription"
 proxmox_ve__apt_repo_pve_enterprise: "deb https://enterprise.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise"
 proxmox_ve__apt_repo_key:
+  buster: "http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg"
   stretch: "http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg"
   jessie: "http://download.proxmox.com/debian/proxmox-ve-release-4.x.gpg"
 proxmox_ve__apt_repo_todel:
