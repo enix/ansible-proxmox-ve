@@ -53,11 +53,11 @@
 
 - name: restart iscsid
   service: name=iscsid state=restarted
-  when: iscsid_restart|changed
+  when: iscsid_restart.changed
 
 - name: restart multipath
   service: name=multipath-tools state=restarted
-  when: multipath_restart|changed
+  when: multipath_restart.changed
 
 - name: "Check ISCSI storage exists"
   command: pvesm  list {{ item.name }}
