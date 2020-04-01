@@ -10,8 +10,8 @@ Requirements
 
 Supported targets:
 
-- Debian 8 "Jessie"
 - Debian 9 "Stretch"
+- Debian 10 "Buster"
 
 
 Role Variables
@@ -25,7 +25,7 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
-- `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" ]`. If using LVM inside VMs this can lead to issues. So it must be set to `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/[^/]+/vm-[0-9]+-disk-.*|" ]`.
+- `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]`.
 - `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
 - `proxmox_ve__storage_iscsi_options` - options to change in iscsid.conf. default:
 ```
@@ -92,6 +92,9 @@ Still to do
 
 Changelog
 ---------
+### 2.3.0
+
+Update lvm global_filter to new 6.1 default value
 
 ### 2.2.0
 
@@ -109,7 +112,6 @@ Add configuration of /etc/hosts
 ### 2.0.0
 
 Now include automatic host reboot feature, proper storage manangement
-
 
 ### 1.0.0
 
