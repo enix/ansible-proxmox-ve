@@ -92,10 +92,15 @@ Still to do
 
 Changelog
 ---------
-### 2.3.0
+### 2.4.0
 
 Update lvm global_filter to new 6.1 default value
 Depreciation fixes
+
+### 2.3.0
+
+Fix lvm issues
+Add iscsi configration options
 
 ### 2.2.0
 
