@@ -2,11 +2,8 @@
 
 - name: "Install ISCSI tools"
   apt:
-    name: "{{ item }}"
+    name: [ 'open-iscsi', 'multipath-tools']
     state: present
-  with_items:
-    - open-iscsi
-    - multipath-tools
 
 - name: "Change default initiator name"
   lineinfile:
