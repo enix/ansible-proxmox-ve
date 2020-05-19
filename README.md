@@ -92,6 +92,11 @@ Still to do
 
 Changelog
 ---------
+
+### 2.4.1
+
+Update default multipath.conf to comply with debian buster changes (find_mulitpaths)
+
 ### 2.4.0
 
 Update lvm global_filter to new 6.1 default value
