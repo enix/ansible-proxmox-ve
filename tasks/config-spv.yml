@@ -1,0 +1,42 @@
+---
+
+- name: Check if prometheus pve user exist
+  command: /usr/sbin/pveum user list
+  register: pve_user_list
+  check_mode: no
+
+- name: Create prometheus pve user
+  command: "/usr/sbin/pveum user add {{ proxmox_ve__spv_user }} -password {{ proxmox_ve__spv_password }}"
+  when: proxmox_ve__spv_user not in pve_user_list.stdout
+
+- name: Create prometheus pve user
+  command: "/usr/sbin/pveum aclmod / -user {{ proxmox_ve__spv_user }} -role PVEAuditor"
+  when: proxmox_ve__spv_user not in pve_user_list.stdout
+
+- name: Create agent directory
+  file:
+    path: "/opt/enix-spv-agent/"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Render pve_exporter config
+  template:
+    src: spv_pve.j2
+    dest: /opt/enix-spv-agent/pve.yml
+    owner: root
+    group: root
+    mode: 0644
+  no_log: true
+  register: pve_conf
+
+- name: Check existing services
+  service_facts:
+  when: pve_conf.changed
+
+- name: Restart pve_exporter
+  service:
+    name: prom-pve-exporter
+    state: restarted
+  when: pve_conf.changed and ansible_facts.services["prom-pve-exporter.service"] is defined

@@ -14,3 +14,4 @@ proxmox_ve__storage_iscsi_options:
   - option: node.session.timeo.replacement_timeout
     value: 10
     state: present
+proxmox_ve__spv_user: "prometheus@pve"

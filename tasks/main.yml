@@ -19,3 +19,6 @@
 
 - include: config-storage-lvm.yml
   when: "proxmox_ve__storage_lvm | length > 0"
+
+- include: config-spv.yml
+  when: proxmox_ve__spv_password is defined
