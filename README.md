@@ -28,6 +28,8 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]`.
 - `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
 - `proxmox_ve__storage_iscsi_options` - options to change in iscsid.conf. default:
+- `proxmox_ve__spv_user` - username with PVEAuditor role used for supervision. default: `prometheus@pve`
+- `proxmox_ve__spv_password` - password for supervision user. If not defined, no user is created.
 ```
 proxmox_ve__storage_iscsi_options:
   - option: node.session.timeo.replacement_timeout

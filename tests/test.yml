@@ -4,3 +4,4 @@
     - role: '../../.'
       proxmox_ve__lvm_global_filter: '[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/[^/]+/vm-[0-9]+-disk-.*|"]'
       proxmox_ve__disable_smt: true
+      proxmox_ve__spv_password: 'SecR€7P4$Sw0rD'
