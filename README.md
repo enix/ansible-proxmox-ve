@@ -95,6 +95,10 @@ Still to do
 Changelog
 ---------
 
+### 2.5.0
+
+Add creation of a supervision role user on the cluster
+
 ### 2.4.1
 
 Update default multipath.conf to comply with debian buster changes (find_mulitpaths)
