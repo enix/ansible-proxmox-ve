@@ -12,6 +12,7 @@ Supported targets:
 
 - Debian 9 "Stretch"
 - Debian 10 "Buster"
+- Debian 11 "Bullseye"
 
 
 Role Variables
@@ -95,6 +96,9 @@ Still to do
 Changelog
 ---------
 
+### 2.6.0
+
+Add Proxmox 7.0 / BullsEye support
 ### 2.5.0
 
 Add creation of a supervision role user on the cluster
