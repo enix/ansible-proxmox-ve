@@ -30,6 +30,22 @@
   when:
     - proxmox_ve__enterprise
 
+- name: Get list of installed packages
+  package_facts:
+    manager: apt
+
+# Must install ifupdown2 before proxmox-ve otherwise network connection
+# will be closed during upgrade
+- name: Install ifupdown2
+  apt:
+    package: ifupdown2
+    state: present
+    update_cache: yes
+  notify: Reboot Host
+  when: 
+    - "'proxmox-ve' not in ansible_facts.packages"
+    - ansible_distribution_release == "bullseye"
+
 - name: Install Proxmox VE software
   apt:
     package: proxmox-ve
