@@ -10,12 +10,14 @@
 - include: install-packages.yml
 
 - include: config-network.yml
+  tags: proxmox_ve__confnetwork
 
 - include: reboot-host.yml
   when: proxmox_ve__force_reboot
 
 - include: config-storage-iscsi.yml
   when: "proxmox_ve__storage_iscsi | length > 0"
+  tags: proxmox_ve__confiscsi
 
 - include: config-storage-lvm.yml
   when: "proxmox_ve__storage_lvm | length > 0"
