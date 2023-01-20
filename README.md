@@ -26,17 +26,18 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__net_ovs` - enable OpenVswitch network configuration on host, default: false.
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
+- `proxmox_ve__storage_lvm_options` - options to change in lvm.conf. default: `none`.
 - `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]`.
 - `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
 - `proxmox_ve__storage_iscsi_options` - options to change in iscsid.conf. default:
-- `proxmox_ve__spv_user` - username with PVEAuditor role used for supervision. default: `prometheus@pve`
-- `proxmox_ve__spv_password` - password for supervision user. If not defined, no user is created.
 ```
 proxmox_ve__storage_iscsi_options:
   - option: node.session.timeo.replacement_timeout
     value: 10
     state: present
 ```
+- `proxmox_ve__spv_user` - username with PVEAuditor role used for supervision. default: `prometheus@pve`
+- `proxmox_ve__spv_password` - password for supervision user. If not defined, no user is created.
 - `proxmox_ve__storage_iscsi_multipath_template` - template file to use for multipath configuration.
 
 
@@ -81,6 +82,9 @@ And add it to your play's roles:
                 - /dev/mapper/bigvolume
               pesize: "256"
               shared: 1
+          proxmox_ve__storage_lvm_options:
+            - option: issue_discards
+              value: 0
 
 You can also use the role as a playbook. You will be asked which hosts to provision, and you can further configure the play by using `--extra-vars`.
 
@@ -95,6 +99,10 @@ Still to do
 
 Changelog
 ---------
+
+### 2.7.0
+
+Add `proxmox_ve__storage_lvm_options` to setup options un `lvm.conf`.
 
 ### 2.6.0
 

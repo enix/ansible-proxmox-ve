@@ -31,6 +31,16 @@
     backrefs: yes
     backup: yes
 
+- name: "Configure LVM options"
+  lineinfile:
+    path: /etc/lvm/lvm.conf
+    backrefs: yes
+    regexp: "^#?[ \t]*{{ item.option }}.+$"
+    line: "{{ item.option }} = {{ item.value }}"
+    state: "{{ item.state | default('present') }}"
+    backup: yes
+  with_items: "{{ proxmox_ve__storage_lvm_options }}"
+
 - name: "Check LVM storage existence"
   command: pvesm list {{ item.name }}
   ignore_errors: yes
