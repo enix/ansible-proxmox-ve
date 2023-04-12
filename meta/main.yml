@@ -1,17 +1,15 @@
 galaxy_info:
-  role_name: enix.proxmox_ve
+  role_name: proxmox_ve
   author: Laurent CORBES
   description: Ansible role to deploy proxmox VE software
   company: Enix Hosting (http://www.enix.io)
   license: license GPLv2
 
-  min_ansible_version: 2.5
+  min_ansible_version: "2.5"
 
   platforms:
   - name: Debian
     versions:
-    - jessie
-    - stretch
     - buster
     - bullseye
 

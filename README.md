@@ -10,7 +10,6 @@ Requirements
 
 Supported targets:
 
-- Debian 9 "Stretch"
 - Debian 10 "Buster"
 - Debian 11 "Bullseye"
 
@@ -101,6 +100,9 @@ Still to do
 Changelog
 ---------
 
+### 2.8.0
+
+Add `proxmox_ve__migration_secure` option to disable secure migration mechanism if needed.
 ### 2.7.0
 
 Add `proxmox_ve__storage_lvm_options` to setup options un `lvm.conf`.
