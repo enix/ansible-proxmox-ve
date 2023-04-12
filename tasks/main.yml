@@ -15,6 +15,8 @@
 - include: reboot-host.yml
   when: proxmox_ve__force_reboot
 
+- include: config-pve.yml
+
 - include: config-storage-iscsi.yml
   when: "proxmox_ve__storage_iscsi | length > 0"
   tags: proxmox_ve__confiscsi

@@ -39,6 +39,7 @@ proxmox_ve__storage_iscsi_options:
 - `proxmox_ve__spv_user` - username with PVEAuditor role used for supervision. default: `prometheus@pve`
 - `proxmox_ve__spv_password` - password for supervision user. If not defined, no user is created.
 - `proxmox_ve__storage_iscsi_multipath_template` - template file to use for multipath configuration.
+- `proxmox_ve__migration_secure` - Define security level of migrations. See [https://pve.proxmox.com/wiki/Manual:_datacenter.cfg]. default: `true`.
 
 
 Dependencies

@@ -16,3 +16,4 @@ proxmox_ve__storage_iscsi_options:
     value: 10
     state: present
 proxmox_ve__spv_user: "prometheus@pve"
+proxmox_ve__migration_secure: true
