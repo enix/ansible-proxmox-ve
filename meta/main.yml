@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: proxmox_ve
+  role_name: enix.proxmox_ve
   author: Laurent CORBES
   description: Ansible role to deploy proxmox VE software
   company: Enix Hosting (http://www.enix.io)
