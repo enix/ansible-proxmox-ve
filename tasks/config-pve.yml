@@ -3,7 +3,7 @@
 - name: "Make sure PVE configuration file exists"
   file:
     path: /etc/pve/datacenter.cfg
-    state: present
+    state: file
     mode: 0660
     owner: root
     group: root
