@@ -1,5 +1,13 @@
 ---
 
+- name: "Make sure PVE configuration file exists"
+  file:
+    path: /etc/pve/datacenter.cfg
+    state: present
+    mode: 0660
+    owner: root
+    group: root
+
 - name: "Configure PVE migration security"
   lineinfile:
     path: /etc/pve/datacenter.cfg
