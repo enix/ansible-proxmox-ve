@@ -1,12 +1,5 @@
 ---
 
-- name: "Make sure PVE configuration file exists"
-  file:
-    path: /etc/pve/datacenter.cfg
-    state: file
-    mode: 0660
-    owner: root
-    group: root
 
 - name: "Configure PVE migration security"
   lineinfile:
@@ -16,3 +9,7 @@
     line: "migration: type={{ proxmox_ve__migration_secure | ternary('secure', 'insecure') }}"
     state: "present"
     backup: yes
+    create: true
+    mode: 0660
+    owner: root
+    group: root
