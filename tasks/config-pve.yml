@@ -9,7 +9,4 @@
     line: "migration: type={{ proxmox_ve__migration_secure | ternary('secure', 'insecure') }}"
     state: "present"
     backup: yes
-    create: true
-    mode: 0660
-    owner: root
-    group: root
+    create: yes
