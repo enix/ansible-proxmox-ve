@@ -4,8 +4,8 @@
 - name: "Configure PVE migration security"
   lineinfile:
     path: /etc/pve/datacenter.cfg
-    backrefs: yes
-    regexp: "^#?[ \t]*migration:.+$"
+    backrefs: no
+    regexp: "^migration:.+$"
     line: "migration: type={{ proxmox_ve__migration_secure | ternary('secure', 'insecure') }}"
     state: "present"
     backup: yes
