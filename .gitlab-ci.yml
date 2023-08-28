@@ -37,3 +37,9 @@ proxmox-7:
   <<: *ansible_test
   tags:
     - virtualbox
+
+proxmox-8:
+  image: debian-12-base
+  <<: *ansible_test
+  tags:
+    - virtualbox

@@ -12,6 +12,7 @@ Supported targets:
 
 - Debian 10 "Buster"
 - Debian 11 "Bullseye"
+- Debian 12 "Bookworm"
 
 
 Role Variables
@@ -99,6 +100,10 @@ Still to do
 
 Changelog
 ---------
+
+### 3.0.0
+
+Add Debian Bookworm and Proxmox VE 8.x branch support.
 
 ### 2.8.0
 
