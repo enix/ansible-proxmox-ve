@@ -5,8 +5,8 @@ variables:
 
 .ansible_test_template: &ansible_test
   before_script:
-    - apt update && apt -y dist-upgrade
-    - pip3 install --upgrade ansible ansible-lint yamllint
+#    - apt update && apt -y dist-upgrade
+    - pip3 install --upgrade --break-system-packages ansible ansible-lint yamllint
   script:
     - ansible --version
 # Run linters. Does not fail if no errors reported
