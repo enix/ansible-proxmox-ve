@@ -4,14 +4,11 @@ variables:
   ANSIBLE_FORCE_COLOR: "true"
 
 .ansible_test_template: &ansible_test
-  before_script:
-#    - apt update && apt -y dist-upgrade
-    - pip3 install --upgrade --break-system-packages ansible ansible-lint yamllint
   script:
     - ansible --version
 # Run linters. Does not fail if no errors reported
-    - ansible-lint --force-color . || true
-    - yamllint -f colored . || true
+    # - ansible-lint --force-color . || true
+    # - yamllint -f colored . || true
 # Uncomment if your role have depends
 #    - ansible-galaxy install -v -r requirements.yml
     - ansible-playbook tests/test.yml --syntax-check
@@ -29,19 +26,31 @@ variables:
     # check that our dummy file exists. TOBEREMOVED
 #    - cat /tmp/.dummy-ansible-task
 
+lint:
+  stage: test
+  image: registry.gitlab.com/lcaflc/ansiblecheck:debian-bullseye
+  script:
+    - ansible --version
+# Run linters. Does not fail if no errors reported
+    - ansible-lint --force-color . || true
+    - yamllint -f colored . || true
+
 proxmox-6:
+  stage: deploy
   image: debian-10-base
   <<: *ansible_test
   tags:
     - virtualbox
 
 proxmox-7:
+  stage: deploy
   image: debian-11-base
   <<: *ansible_test
   tags:
     - virtualbox
 
 proxmox-8:
+  stage: deploy
   image: debian-12-base
   <<: *ansible_test
   tags:
