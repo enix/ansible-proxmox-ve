@@ -1,4 +1,16 @@
 ---
+
+- hosts: test
+  tasks:
+    - name: Upgrade system packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+    - name: Upgrade ansible
+      ansible.builtin.pip:
+        name: ansible
+        state: latest
+
 - hosts: test
   roles:
     - role: '../../.'
@@ -13,3 +25,4 @@
         - option: issue_discards
           value: 0
       #proxmox_ve__migration_secure: false
+      proxmox_ve__force_reboot: true
