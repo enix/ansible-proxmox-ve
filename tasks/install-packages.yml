@@ -31,7 +31,7 @@
     - proxmox_ve__enterprise
 
 - name: Get list of installed packages
-  package_facts:
+  ansible.builtin.package_facts:
     manager: apt
 
 # Must install ifupdown2 before proxmox-ve otherwise network connection
