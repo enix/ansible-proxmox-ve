@@ -4,7 +4,6 @@
   ansible.builtin.file:
     path: /etc/pve/datacenter.cfg
     state: touch
-    mode: 0664
     owner: root
     group: www-data
 
