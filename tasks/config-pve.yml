@@ -10,3 +10,4 @@
     state: "present"
     backup: yes
     create: yes
+    unsafe_writes: yes
