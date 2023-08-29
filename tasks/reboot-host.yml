@@ -6,9 +6,9 @@
 
 - name: "Wait host"
   wait_for_connection:
-    delay: 10
+    delay: 60
     sleep: 5
-    timeout: 900
+    timeout: 1800
 
 - name: "Regather facts"
   setup:
