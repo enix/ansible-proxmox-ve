@@ -1,7 +1,15 @@
 variables:
+  GITHUB_REPO: $CI_PROJECT_NAME
+  GITHUB_GROUP: enix
   ANSIBLE_INVENTORY: "tests/inventory"
   PYTHONUNBUFFERED: "1"
   ANSIBLE_FORCE_COLOR: "true"
+  PY_COLORS: '1'
+
+stages:
+  - lint
+  - test
+  - deploy
 
 .ansible_test_template: &ansible_test
   script:
@@ -15,33 +23,47 @@ variables:
     # check that our dummy file exists. TOBEREMOVED
 #    - cat /tmp/.dummy-ansible-task
 
-lint:
-  stage: test
+linting:
+  stage: lint
   image: registry.gitlab.com/lcaflc/ansiblecheck:debian-bullseye
-  script:
+  before_script:
     - ansible --version
+  script:
 # Run linters. Does not fail if no errors reported
     - ansible-lint --force-color . || true
     - yamllint -f colored . || true
     - ansible-playbook tests/test.yml --syntax-check
 
 proxmox-6:
-  stage: deploy
+  stage: test
   image: debian-10-base
   <<: *ansible_test
   tags:
     - virtualbox
 
 proxmox-7:
-  stage: deploy
+  stage: test
   image: debian-11-base
   <<: *ansible_test
   tags:
     - virtualbox
 
 proxmox-8:
-  stage: deploy
+  stage: test
   image: debian-12-base
   <<: *ansible_test
   tags:
     - virtualbox
+
+importgalaxy:
+  stage: deploy
+  image: registry.gitlab.com/lcaflc/ansiblecheck:debian-bullseye
+  only: 
+    - main
+    - master
+    - tags
+  when: on_success
+  before_script:
+    - ansible --version
+  script:
+    - ansible-galaxy role import ${GITHUB_GROUP} ${GITHUB_REPO} --token ${GALAXY_API_TOKEN}
