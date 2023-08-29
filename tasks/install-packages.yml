@@ -1,29 +1,29 @@
 ---
 
 - name: Install APT https transport
-  apt:
+  ansible.builtin.apt:
     package: apt-transport-https
     state: present
 
 - name: Register repository signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release] }}"
 
 - name: Removing well known repo files
-  file:
+  ansible.builtin.file:
     path: /etc/apt/sources.list.d/{{ item }}
     state: absent
   with_items:
     - "{{ proxmox_ve__apt_repo_todel }}"
 
 - name: Add no-subscription repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ proxmox_ve__apt_repo_pve_no_subscription }}"
     state: present
     update_cache: yes
 
 - name: Add enterprise repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ proxmox_ve__apt_repo_pve_enterprise }}"
     state: present
     update_cache: yes
@@ -37,7 +37,7 @@
 # Must install ifupdown2 before proxmox-ve otherwise network connection
 # will be closed during upgrade
 - name: Install ifupdown2
-  apt:
+  ansible.builtin.apt:
     package: ifupdown2
     state: present
     update_cache: yes
@@ -47,7 +47,7 @@
     - ansible_distribution_release == "bullseye"
 
 - name: Install Proxmox VE software
-  apt:
+  ansible.builtin.apt:
     package: proxmox-ve
     state: present
     update_cache: yes

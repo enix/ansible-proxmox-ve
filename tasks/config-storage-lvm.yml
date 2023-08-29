@@ -3,9 +3,9 @@
 
 # Create device vg
 - name: "Create LVM vg"
-  lvg:
+  community.general.lvg:
     vg: "{{ item.name }}"
-    pvs: "{{ item.devices | join (',') }}"
+    pvs: "{{ item.devices | join(',') }}"
     pesize: "{{ item.pesize }}"
     state: present
   with_items:
@@ -13,7 +13,7 @@
 
 # Disable autoactivation of volumes
 - name: "Disable LVM auto volume activation"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/lvm/lvm.conf
     regexp: "^auto_activation_volume_list ="
     line: "auto_activation_volume_list = []"
@@ -23,7 +23,7 @@
 
 # Check global_filter configuration
 - name: "Set LVM global_filter configuration"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/lvm/lvm.conf
     regexp: "^([ \t]*global_filter =).*"
     line: '\1 {{ proxmox_ve__lvm_global_filter }}'
@@ -32,7 +32,7 @@
     backup: yes
 
 - name: "Configure LVM options"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/lvm/lvm.conf
     backrefs: yes
     regexp: "^#?[ \t]*{{ item.option }}.+$"
@@ -42,7 +42,7 @@
   with_items: "{{ proxmox_ve__storage_lvm_options }}"
 
 - name: "Check LVM storage existence"
-  command: pvesm list {{ item.name }}
+  ansible.builtin.command: pvesm list {{ item.name }}
   ignore_errors: yes
   changed_when: False
   with_items:
@@ -50,21 +50,21 @@
   register: pve_lvm_list
 
 - name: "Add LVM storage configuration"
-  command: pvesm add lvm {{ item.item.name }} --vgname {{ item.item.name }}
+  ansible.builtin.command: pvesm add lvm {{ item.item.name }} --vgname {{ item.item.name }}
   when: item.rc != 0
   loop: "{{ pve_lvm_list.results }}"
 
 # unfortunaly there is no way to find a change. rc value always 0 and no stdout
 - name: "Set LVM storage content property"
-  command: pvesm set {{ item.name }} --content images
+  ansible.builtin.command: pvesm set {{ item.name }} --content images
   with_items:
     - "{{ proxmox_ve__storage_lvm }}"
 
 - name: "Set LVM storage shared property"
-  command: pvesm set {{ item.name }} --shared {{ item.shared }}
+  ansible.builtin.command: pvesm set {{ item.name }} --shared {{ item.shared }}
   with_items:
     - "{{ proxmox_ve__storage_lvm }}"
 
 - name: "Check proxmox storage status"
-  command: pvesm status
+  ansible.builtin.command: pvesm status
   changed_when: False

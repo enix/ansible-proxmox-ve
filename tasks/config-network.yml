@@ -1,13 +1,13 @@
 ---
 
 - name: Install OpenVSwitch
-  apt:
+  ansible.builtin.apt:
     name: openvswitch-switch
     state: present
   when: proxmox_ve__net_ovs
 
 - name: Configure interfaces
-  template:
+  ansible.builtin.template:
     src: "{{ proxmox_ve__net_template }}"
     dest: "/etc/network/interfaces"
     backup: true

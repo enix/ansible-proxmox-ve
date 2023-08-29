@@ -2,13 +2,13 @@
 # Automatic host reboot
 
 - name: Force handlers to run now
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: "Wait host"
-  wait_for_connection:
+  ansible.builtin.wait_for_connection:
     delay: 60
     sleep: 5
     timeout: 1800
 
 - name: "Regather facts"
-  setup:
+  ansible.builtin.setup:

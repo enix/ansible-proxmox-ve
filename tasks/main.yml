@@ -1,28 +1,36 @@
 ---
 
 - name: "Checking system OS"
-  fail:
+  ansible.builtin.fail:
     msg: "This is not a Debian based distribution. Proxmox VE is not compatible"
   when: ansible_distribution != "Debian"
 
-- include: preconfig.yml
+- name: "Preconfigure the Host"
+  ansible.builtin.include_tasks: preconfig.yml
 
-- include: install-packages.yml
+- name: "Install Proxmox VE packages"
+  ansible.builtin.include_tasks: install-packages.yml
 
-- include: config-network.yml
+- name: "Configure network"
+  ansible.builtin.include_tasks: config-network.yml
   tags: proxmox_ve__confnetwork
 
-- include: reboot-host.yml
+- name: "Reboot host"
+  ansible.builtin.include_tasks: reboot-host.yml
   when: proxmox_ve__force_reboot
 
-- include: config-pve.yml
+- name: "Configure Proxmox VE"
+  ansible.builtin.include_tasks: config-pve.yml
 
-- include: config-storage-iscsi.yml
+- name: "Configure ISCSI storage"
+  ansible.builtin.include_tasks: config-storage-iscsi.yml
   when: "proxmox_ve__storage_iscsi | length > 0"
   tags: proxmox_ve__confiscsi
 
-- include: config-storage-lvm.yml
+- name: "Configure LVM storage"
+  ansible.builtin.include_tasks: config-storage-lvm.yml
   when: "proxmox_ve__storage_lvm | length > 0"
 
-- include: config-spv.yml
+- name: "Configure Supervision user"
+  ansible.builtin.include_tasks: config-spv.yml
   when: proxmox_ve__spv_password is defined

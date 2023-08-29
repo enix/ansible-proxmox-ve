@@ -1,12 +1,12 @@
 ---
 
 - name: "Install ISCSI tools"
-  apt:
+  ansible.builtin.apt:
     name: [ 'open-iscsi', 'multipath-tools']
     state: present
 
 - name: "Change default initiator name"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/iscsi/initiatorname.iscsi
     regexp: '^(InitiatorName=iqn.1993-08\.)org\.debian(.*)$'
     line: '\1io.enix.{{ ansible_hostname }}\2'
@@ -15,7 +15,7 @@
     backup: yes
 
 - name: "Configure ISCSI daemon startup"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/iscsi/iscsid.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -27,7 +27,7 @@
   register: iscsid_restart
 
 - name: "Configure ISCSI daemon options"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/iscsi/iscsid.conf
     backrefs: yes
     regexp: "^#?{{ item.option }}.+$"
@@ -38,7 +38,7 @@
   register: iscsid_restart
 
 - name: "Configure multipath daemon"
-  template:
+  ansible.builtin.template:
     src: "{{ proxmox_ve__storage_iscsi_multipath_template }}"
     dest: /etc/multipath.conf
     owner: root
@@ -48,16 +48,20 @@
   # notify: restart multipath
   register: multipath_restart
 
-- name: restart iscsid
-  service: name=iscsid state=restarted
+- name: Restart iscsid
+  ansible.builtin.service:
+    name: iscsid
+    state: restarted
   when: iscsid_restart.changed
 
-- name: restart multipath
-  service: name=multipath-tools state=restarted
+- name: Restart multipath
+  ansible.builtin.service:
+    name: multipath-tools
+    state: restarted
   when: multipath_restart.changed
 
 - name: "Check ISCSI storage exists"
-  command: pvesm  list {{ item.name }}
+  ansible.builtin.command: pvesm  list {{ item.name }}
   ignore_errors: yes
   changed_when: False
   with_items:
@@ -65,22 +69,22 @@
   register: pve_iscsi_list
 
 - name: "Update proxmox storage configuration"
-  command: pvesm add iscsi {{ item.item.name }} --portal {{ item.item.portal }} --target {{ item.item.target }}
+  ansible.builtin.command: pvesm add iscsi {{ item.item.name }} --portal {{ item.item.portal }} --target {{ item.item.target }}
   when: item.rc != 0
   loop: "{{ pve_iscsi_list.results }}"
 
 # unfortunaly there is no way to find a change. rc value always 0 and no stdout
 - name: "Set proxmox storage content"
-  command: pvesm set {{ item.name }} --content none
+  ansible.builtin.command: pvesm set {{ item.name }} --content none
   with_items:
     - "{{ proxmox_ve__storage_iscsi }}"
 
 - name: "Check proxmox storage status"
-  command: pvesm status
+  ansible.builtin.command: pvesm status
   changed_when: False
 
 - name: "Wait for ISCSI device to come UP, It's time to map volume to LUN in your ISCSI storage system"
-  wait_for:
+  ansible.builtin.wait_for:
     path: "/dev/mapper/{{ item.1.name }}"
     state: present
     delay: 10

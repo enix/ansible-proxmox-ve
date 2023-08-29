@@ -1,14 +1,15 @@
 ---
 
 - name: "Create PVE datacenter configuration file"
-  file:
+  ansible.builtin.file:
     path: /etc/pve/datacenter.cfg
     state: touch
+    mode: 0664
     owner: root
     group: www-data
 
 - name: "Configure PVE migration security"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/pve/datacenter.cfg
     backrefs: no
     regexp: "^migration:.+$"

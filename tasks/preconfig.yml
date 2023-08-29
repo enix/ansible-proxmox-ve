@@ -1,7 +1,7 @@
 ---
 
 - name: Setup /etc/hosts with node ip
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/hosts
     regexp: '^[0-9\.]+[ \t]+(.*{{ ansible_hostname }}.*)'
     line: '{{ ansible_default_ipv4.address }} \1'
@@ -10,7 +10,7 @@
     backup: true
 
 - name: Disable SMT
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/default/grub
     regexp: '^(GRUB_CMDLINE_LINUX=(?!.*nosmt)\"[^\"]*)(\".*)'
     line: '\1 nosmt\2'
@@ -19,5 +19,5 @@
     backup: true
   when: proxmox_ve__disable_smt
   notify:
-    - update-grub
+    - Update-grub
     - Reboot Host
