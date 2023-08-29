@@ -1,5 +1,11 @@
 ---
 
+- name: "Create PVE datacenter configuration file"
+  file:
+    path: /etc/pve/datacenter.cfg
+    state: touch
+    owner: root
+    group: www-data
 
 - name: "Configure PVE migration security"
   lineinfile:
@@ -9,5 +15,5 @@
     line: "migration: type={{ proxmox_ve__migration_secure | ternary('secure', 'insecure') }}"
     state: "present"
     backup: yes
-    create: yes
+    create: no
     unsafe_writes: yes
