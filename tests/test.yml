@@ -13,5 +13,5 @@
       proxmox_ve__storage_lvm_options:
         - option: issue_discards
           value: 0
-      #proxmox_ve__migration_secure: false
-      proxmox_ve__force_reboot: true
+      proxmox_ve__migration_secure: false
+      #proxmox_ve__force_reboot: true
