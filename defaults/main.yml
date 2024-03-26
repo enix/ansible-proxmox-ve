@@ -8,7 +8,7 @@ proxmox_ve__net_template: "interfaces.j2"
 proxmox_ve__storage_lvm: []
 proxmox_ve__storage_iscsi: []
 proxmox_ve__storage_iscsi_multipath_template: "multipath.conf.j2"
-proxmox_ve__lvm_global_filter: '[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]'
+proxmox_ve__lvm_global_filter: '[ "r|/dev/zd.*|", "r|/dev/rbd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]'
 proxmox_ve__disable_smt: false
 proxmox_ve__storage_lvm_options: []
 proxmox_ve__storage_iscsi_options:
@@ -17,3 +17,4 @@ proxmox_ve__storage_iscsi_options:
     state: present
 proxmox_ve__spv_user: "prometheus@pve"
 proxmox_ve__migration_secure: true
+proxmox_ve__cluster_ip: "{{ ansible_default_ipv4.address }}"

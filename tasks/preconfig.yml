@@ -4,7 +4,7 @@
   ansible.builtin.lineinfile:
     path: /etc/hosts
     regexp: '^[0-9\.]+[ \t]+(.*{{ ansible_hostname }}.*)'
-    line: '{{ ansible_default_ipv4.address }} \1'
+    line: '{{ proxmox_ve__cluster_ip }} \1'
     backrefs: yes
     state: present
     backup: true
