@@ -40,7 +40,7 @@ proxmox_ve__storage_iscsi_options:
 - `proxmox_ve__spv_password` - password for supervision user. If not defined, no user is created.
 - `proxmox_ve__storage_iscsi_multipath_template` - template file to use for multipath configuration.
 - `proxmox_ve__migration_secure` - Define security level of migrations. See [https://pve.proxmox.com/wiki/Manual:_datacenter.cfg]. default: `true`.
-- `proxmox_ve__cluster_ip` - Ip to use for proxmox clustering. default:  `ansible_default_ipv4.address`.
+- `proxmox_ve__cluster_ip` - Ip to use for proxmox clustering. This will change `/etc/hosts` node ip. default:  `ansible_default_ipv4.address`.
 
 
 Dependencies
@@ -101,6 +101,10 @@ Still to do
 
 Changelog
 ---------
+
+### 3.1.0
+
+Add support for specific cluster ip.
 
 ### 3.0.0
 
