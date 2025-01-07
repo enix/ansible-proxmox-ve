@@ -84,6 +84,10 @@ And add it to your play's roles:
                 - /dev/mapper/bigvolume
               pesize: "256"
               shared: 1
+              # saferemove option is optional. but saferemove_throughput options must be defined together otherwise will not be applied
+              saferemove: 1
+              # 100MB/s
+              saferemove_throughput: 104857600
           proxmox_ve__storage_lvm_options:
             - option: issue_discards
               value: 0
@@ -101,6 +105,10 @@ Still to do
 
 Changelog
 ---------
+
+### 3.2.0
+
+Add saferemove options to LVM storage configuration.
 
 ### 3.1.0
 

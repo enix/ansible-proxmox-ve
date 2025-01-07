@@ -71,6 +71,15 @@
   register: pvesm_output
   changed_when: pvesm_output.rc != 0
 
+- name: "Set LVM storage saferemove property"
+  ansible.builtin.command: pvesm set {{ item.name }} --saferemove {{ item.saferemove }} --saferemove_throughput {{ item.saferemove_throughput }}
+  when:
+    - item.saferemove is defined
+    # - item.saferemove_throughput is defined
+  loop: "{{ proxmox_ve__storage_lvm | flatten(levels=1) }}"
+  register: pvesm_output
+  changed_when: pvesm_output.rc != 0
+
 - name: "Check proxmox storage status"
   ansible.builtin.command: pvesm status
   register: pvesm_output
