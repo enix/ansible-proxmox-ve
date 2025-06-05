@@ -10,6 +10,8 @@
         - option: node.session.timeo.replacement_timeout
           value: 10
           state: present
+      proxmox_ve__storage_lvm_event_activation: false
+      proxmox_ve__storage_lvm_disable_auto_activation: true
       proxmox_ve__storage_lvm_options:
         - option: issue_discards
           value: 0

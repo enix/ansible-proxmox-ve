@@ -9,8 +9,8 @@ proxmox_ve__storage_lvm: []
 proxmox_ve__storage_iscsi: []
 proxmox_ve__storage_iscsi_multipath_template: "multipath.conf.j2"
 proxmox_ve__lvm_global_filter: '[ "r|/dev/zd.*|", "r|/dev/rbd.*|", "r|/dev/mapper/pve-.*|", "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]'
-proxmox_ve__lvm_disable_auto_activation: false
-proxmox_ve__lvm_event_activation: true
+proxmox_ve__storage_lvm_disable_auto_activation: false
+proxmox_ve__storage_lvm_event_activation: true
 proxmox_ve__disable_smt: false
 proxmox_ve__storage_lvm_options: []
 proxmox_ve__storage_iscsi_options:

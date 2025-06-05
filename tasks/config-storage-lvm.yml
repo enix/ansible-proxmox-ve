@@ -20,14 +20,14 @@
     insertafter: "^\t# auto_activation_volume_list = "
     state: present
     backup: yes
-  when: proxmox_ve__lvm_disable_auto_activation is defined and proxmox_ve__lvm_disable_auto_activation
+  when: proxmox_ve__storage_lvm_disable_auto_activation is defined and proxmox_ve__storage_lvm_disable_auto_activation
 
 # Configure event activation of volumes
 - name: "Configure LVM event activation"
   ansible.builtin.lineinfile:
     path: /etc/lvm/lvm.conf
     regexp: "^event_activation ="
-    line: "event_activation = {{ proxmox_ve__lvm_event_activation | ternary('1', '0') }}"
+    line: "event_activation = {{ proxmox_ve__storage_lvm_event_activation | ternary('1', '0') }}"
     insertafter: "^\t# event_activation = "
     state: present
     backup: yes
