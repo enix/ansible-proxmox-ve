@@ -27,6 +27,8 @@ This roles comes preloaded with almost every available default. You can override
 - `proxmox_ve__net_template` - template used for `/etc/network/interfaces` configuration on the host, default: interfaces.j2. The path can be either changed or overloaded in your playbook. The default template only provide a basic bridge configuration.
 - `proxmox_ve__storage_lvm` - description of lvm storage to initialise and configure in proxmox. exemple configuration above.
 - `proxmox_ve__storage_lvm_options` - options to change in lvm.conf. default: `none`.
+- `proxmox_ve__lvm_disable_auto_activation` - Disable lvm auto activation of volumes. Can be usefull on systems with lvm shared storage.
+- `proxmox_ve__lvm_event_activation` - Configure lvm event activation of volumes. Can be usefull to disable on systems with lvm shared storage.
 - `proxmox_ve__lvm_global_filter` - lvm global_filter. default: `[ "r|/dev/zd.*|", "r|/dev/mapper/pve-.*|" "r|/dev/mapper/.*-(vm|base)--[0-9]+--disk--[0-9]+|"]`.
 - `proxmox_ve__storage_iscsi` - description of iscsi storage to configure in proxmox. exemple configuration above.
 - `proxmox_ve__storage_iscsi_options` - options to change in iscsid.conf. default:
@@ -105,6 +107,10 @@ Still to do
 
 Changelog
 ---------
+
+### 3.3.0
+
+Add lvm event_activation and disable_auto_volume_activation.
 
 ### 3.2.0
 
