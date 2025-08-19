@@ -34,12 +34,12 @@ linting:
     - yamllint -f colored . || true
     - ansible-playbook tests/test.yml --syntax-check
 
-proxmox-6:
-  stage: test
-  image: debian-10-base
-  <<: *ansible_test
-  tags:
-    - virtualbox
+# proxmox-6:
+#   stage: test
+#   image: debian-10-base
+#   <<: *ansible_test
+#   tags:
+#     - virtualbox
 
 proxmox-7:
   stage: test
@@ -51,6 +51,13 @@ proxmox-7:
 proxmox-8:
   stage: test
   image: debian-12-base
+  <<: *ansible_test
+  tags:
+    - virtualbox
+
+proxmox-9:
+  stage: test
+  image: debian-13-base
   <<: *ansible_test
   tags:
     - virtualbox
