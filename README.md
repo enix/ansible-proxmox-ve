@@ -10,9 +10,9 @@ Requirements
 
 Supported targets:
 
-- Debian 10 "Buster"
-- Debian 11 "Bullseye"
-- Debian 12 "Bookworm"
+- Debian 11 "Bullseye"  / Proxmox VE 7
+- Debian 12 "Bookworm" / Proxmox VE 8
+- Debian 13 "Trixie" / Proxmox VE 9
 
 
 Role Variables
@@ -107,6 +107,11 @@ Still to do
 
 Changelog
 ---------
+
+### 4.0.0
+
+Add Proxmox VE 9.0 / Debian Trixie Support
+Removed Proxmox VE 6.0 / Debian Buster Support
 
 ### 3.4.0
 
