@@ -1,11 +1,5 @@
 ---
 
-- name: Install APT https transport
-  ansible.builtin.apt:
-    package: apt-transport-https
-    state: present
-
-
 - name: Removing well known repo files
   ansible.builtin.file:
     path: /etc/apt/sources.list.d/{{ item }}
@@ -24,6 +18,11 @@
 - name: Install Proxmox VE apt repository Debian before 13 Trixie
   when: ansible_distribution_version is version('13', '<')
   block:
+  - name: Install APT https transport
+    ansible.builtin.apt:
+      package: apt-transport-https
+      state: present
+
   - name: Register repository signing key
     ansible.builtin.apt_key:
       url: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release] }}"
