@@ -16,6 +16,14 @@
   with_items:
     - "{{ proxmox_ve__apt_repo_todel }}"
 
+# Needed because default installation of Proxmox VE comses with
+# ceph repository file which fail the installation
+- name: Checking ceph repo file
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/ceph.list
+    regexp: '^deb .*enterprise.proxmox.com.*'
+    state: "{{ 'present' if proxmox_ve__enterprise else 'absent' }}"
+
 - name: Add no-subscription repository
   ansible.builtin.apt_repository:
     repo: "{{ proxmox_ve__apt_repo_pve_no_subscription }}"
