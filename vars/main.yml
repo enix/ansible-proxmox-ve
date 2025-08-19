@@ -4,7 +4,7 @@
 proxmox_ve__apt_repo_pve_no_subscription: "deb http://download.proxmox.com/debian {{ ansible_distribution_release }} pve-no-subscription"
 proxmox_ve__apt_repo_pve_enterprise: "deb https://enterprise.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise"
 proxmox_ve__apt_repo_key:
-  trixie: "hhttps://enterprise.proxmox.com/debian/proxmox-archive-keyring-trixie.gpg"
+  trixie: "https://enterprise.proxmox.com/debian/proxmox-archive-keyring-trixie.gpg"
   bookworm: "http://download.proxmox.com/debian/proxmox-release-bookworm.gpg"
   bullseye: "http://download.proxmox.com/debian/proxmox-release-bullseye.gpg"
   buster: "http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg"

@@ -5,9 +5,6 @@
     package: apt-transport-https
     state: present
 
-- name: Register repository signing key
-  ansible.builtin.apt_key:
-    url: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release] }}"
 
 - name: Removing well known repo files
   ansible.builtin.file:
@@ -24,19 +21,53 @@
     regexp: '^deb .*enterprise.proxmox.com.*'
     state: "{{ 'present' if proxmox_ve__enterprise else 'absent' }}"
 
-- name: Add no-subscription repository
-  ansible.builtin.apt_repository:
-    repo: "{{ proxmox_ve__apt_repo_pve_no_subscription }}"
-    state: present
-    update_cache: yes
+- name: Install Proxmox VE apt repository Debian before 13 Trixie
+  when: ansible_distribution_version is version('13', '<')
+  block:
+  - name: Register repository signing key
+    ansible.builtin.apt_key:
+      url: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release] }}"
 
-- name: Add enterprise repository
-  ansible.builtin.apt_repository:
-    repo: "{{ proxmox_ve__apt_repo_pve_enterprise }}"
-    state: present
-    update_cache: yes
-  when:
-    - proxmox_ve__enterprise
+  - name: Add no-subscription repository
+    ansible.builtin.apt_repository:
+      repo: "{{ proxmox_ve__apt_repo_pve_no_subscription }}"
+      state: present
+      update_cache: yes
+
+  - name: Add enterprise repository
+    ansible.builtin.apt_repository:
+      repo: "{{ proxmox_ve__apt_repo_pve_enterprise }}"
+      state: present
+      update_cache: yes
+    when:
+      - proxmox_ve__enterprise
+
+- name: Install Proxmox VE apt repository Debian 13 Trixie and later
+  when: ansible_distribution_version is version('13', '>=')
+  block:
+  - name: Add no-subscription repository
+    ansible.builtin.deb822_repository:
+      name: proxmox
+      type: deb
+      uris: "http://download.proxmox.com/debian/pve"
+      suites: "{{ ansible_distribution_release |lower }}"
+      components: pve-no-subscription
+      signed_by: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release | lower] }}"
+      update_cache: yes
+      state: present
+
+  - name: Add enterprise repository
+    ansible.builtin.deb822_repository:
+      name: pve-enterprise
+      type: deb
+      uris: "https://enterprise.proxmox.com/debian/pve"
+      suites: "{{ ansible_distribution_release |lower }}"
+      components: pve-enterprise
+      signed_by: "{{ proxmox_ve__apt_repo_key[ansible_distribution_release | lower] }}"
+      update_cache: yes
+      state: present
+    when:
+      - proxmox_ve__enterprise
 
 - name: Get list of installed packages
   ansible.builtin.package_facts:
