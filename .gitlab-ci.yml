@@ -41,23 +41,37 @@ linting:
 #   tags:
 #     - virtualbox
 
-proxmox-7:
-  stage: test
-  image: debian-11-base
-  <<: *ansible_test
-  tags:
-    - virtualbox
+# debian-11:
+#   stage: test
+#   image: debian-11-base
+#   <<: *ansible_test
+#   tags:
+#     - virtualbox
 
-proxmox-8:
+debian-12:
   stage: test
   image: debian-12-base
   <<: *ansible_test
   tags:
     - virtualbox
 
-proxmox-9:
+debian-13:
   stage: test
   image: debian-13-base
+  <<: *ansible_test
+  tags:
+    - virtualbox
+
+proxmoxve-8-cdinstall:
+  stage: test
+  image: proxmoxve-8-cd
+  <<: *ansible_test
+  tags:
+    - virtualbox
+
+proxmoxve-9-cdinstall:
+  stage: test
+  image: proxmoxve-9-cd
   <<: *ansible_test
   tags:
     - virtualbox
