@@ -108,6 +108,11 @@ Still to do
 Changelog
 ---------
 
+### 3.4.0
+
+Add lldp package installation
+Fix issue with default ceph apt enterprise repository installation
+
 ### 3.3.0
 
 Add lvm event_activation and disable_auto_volume_activation.
