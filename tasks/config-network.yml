@@ -6,6 +6,11 @@
     state: present
   when: proxmox_ve__net_ovs
 
+- name: Install lldpd
+  ansible.builtin.apt:
+    package: lldpd
+    state: present
+
 - name: Configure interfaces
   ansible.builtin.template:
     src: "{{ proxmox_ve__net_template }}"
